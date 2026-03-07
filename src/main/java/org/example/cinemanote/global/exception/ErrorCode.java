@@ -10,8 +10,7 @@ public enum ErrorCode {
     // 인증/인가
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다"),
-    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다"),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다"),
+    SESSION_NOT_FOUND(HttpStatus.UNAUTHORIZED, "세션이 존재하지 않습니다"),
 
     // 회원
     EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 사용 중인 이메일입니다"),
