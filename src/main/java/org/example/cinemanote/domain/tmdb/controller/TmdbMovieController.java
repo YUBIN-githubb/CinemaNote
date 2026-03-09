@@ -1,5 +1,7 @@
 package org.example.cinemanote.domain.tmdb.controller;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.example.cinemanote.domain.tmdb.dto.response.*;
 import org.example.cinemanote.domain.tmdb.service.TmdbMovieService;
@@ -16,7 +18,7 @@ public class TmdbMovieController {
 
     @GetMapping("/search")
     public Mono<ApiResponse<TmdbPageResponse<TmdbMovieSummaryResponse>>> searchMovies(
-            @RequestParam String query,
+            @RequestParam @NotBlank @Size(max=100) String query,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(required = false) String language) {
         return tmdbMovieService.searchMovies(query, page, language)
