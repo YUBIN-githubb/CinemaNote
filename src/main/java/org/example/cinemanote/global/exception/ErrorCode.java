@@ -11,6 +11,7 @@ public enum ErrorCode {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다"),
     SESSION_NOT_FOUND(HttpStatus.UNAUTHORIZED, "세션이 존재하지 않습니다"),
+    USERID_NOT_FOUND(HttpStatus.UNAUTHORIZED, "세션에 유저 아이디가 존재하지 않습니다"),
     AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "인증에 실패했습니다"),
 
     // 회원

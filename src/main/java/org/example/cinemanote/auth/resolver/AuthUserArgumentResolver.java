@@ -43,7 +43,7 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         Long userId = (Long) session.getAttribute(Const.SESSION_USER_KEY);
 
         if (userId == null) {
-            throw new CustomException(ErrorCode.SESSION_NOT_FOUND);
+            throw new CustomException(ErrorCode.USERID_NOT_FOUND);
         }
 
         return userRepository.findById(userId)
