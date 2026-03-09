@@ -17,11 +17,8 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
-jwt:
-  secret:
-    key: ${JWT_SECRET_KEY}
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    timeout: 30m
