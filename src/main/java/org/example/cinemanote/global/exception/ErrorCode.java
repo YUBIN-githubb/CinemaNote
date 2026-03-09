@@ -21,7 +21,8 @@ public enum ErrorCode {
 
     // 영화
     MOVIE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 영화입니다"),
-    TMDB_API_ERROR(HttpStatus.BAD_GATEWAY, "영화 정보를 불러오는 데 실패했습니다"),
+    TV_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 드라마입니다"),
+    TMDB_API_ERROR(HttpStatus.BAD_GATEWAY, "TMDB API 정보를 불러오는 데 실패했습니다"),
 
     // 아카이브
     ARCHIVE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 아카이브입니다"),

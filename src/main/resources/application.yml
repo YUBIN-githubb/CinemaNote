@@ -22,3 +22,7 @@ spring:
     jdbc:
       initialize-schema: always
     timeout: 30m
+
+tmdb:
+  api-key: ${TMDB_API_KEY}
+  base-url: https://api.themoviedb.org/3
