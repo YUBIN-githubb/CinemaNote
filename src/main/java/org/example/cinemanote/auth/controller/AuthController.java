@@ -9,6 +9,7 @@ import org.example.cinemanote.auth.dto.SignupRequest;
 import org.example.cinemanote.auth.dto.SignupResponse;
 import org.example.cinemanote.auth.service.AuthService;
 import org.example.cinemanote.global.response.ApiResponse;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,7 @@ public class AuthController {
     @PostMapping("/signout")
     public ApiResponse<Void> signout(HttpSession session) {
         session.invalidate();
+        SecurityContextHolder.clearContext();
         return ApiResponse.ok(null);
     }
 }
