@@ -24,7 +24,7 @@ public class ArchiveController {
     private final ArchiveService archiveService;
 
     @PostMapping
-    //@ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<ApiResponse<ArchiveResponse>> createArchive(
             @AuthUser User currentUser,
             @Valid @RequestBody ArchiveCreateRequest request
