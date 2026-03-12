@@ -27,6 +27,7 @@ public enum ErrorCode {
     // 아카이브
     ARCHIVE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 아카이브입니다"),
     ARCHIVE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "해당 아카이브에 접근 권한이 없습니다"),
+    ARCHIVE_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 저장된 아카이브입니다"),
 
     // 단축 URL
     SHORT_LINK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 단축 링크입니다"),
