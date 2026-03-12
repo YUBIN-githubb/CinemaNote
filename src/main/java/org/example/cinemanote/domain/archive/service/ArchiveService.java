@@ -31,12 +31,18 @@ public class ArchiveService {
     private final TmdbTvService tmdbTvService;
 
     public Mono<ArchiveResponse> createArchive(User user, ArchiveCreateRequest request) {
+        if (archiveRepository.existsByUserAndTmdbIdAndContentType(user, request.getTmdbId(), request.getContentType())) {
+            throw new CustomException(ErrorCode.ARCHIVE_ALREADY_EXISTS);
+        }
+
         Mono<Archive> archiveMono;
 
         if (request.getContentType() == ContentType.MOVIE) {
             archiveMono = tmdbMovieService.getMovieDetail(request.getTmdbId(), null)
                     .map(tmdb -> Archive.of(
                             user,
+                            request.getTmdbId(),
+                            request.getContentType(),
                             tmdb.getTitle(),
                             tmdb.getPosterPath(),
                             tmdb.getOverview(),
@@ -48,6 +54,8 @@ public class ArchiveService {
             archiveMono = tmdbTvService.getTvDetail(request.getTmdbId(), null)
                     .map(tmdb -> Archive.of(
                             user,
+                            request.getTmdbId(),
+                            request.getContentType(),
                             tmdb.getName(),
                             tmdb.getPosterPath(),
                             tmdb.getOverview(),
