@@ -41,7 +41,7 @@ public class ArchiveService {
                             tmdb.getPosterPath(),
                             tmdb.getOverview(),
                             parseDate(tmdb.getReleaseDate()),
-                            request.getRaiting(),
+                            request.getRating(),
                             request.getReview()
                     ));
         } else {
@@ -52,7 +52,7 @@ public class ArchiveService {
                             tmdb.getPosterPath(),
                             tmdb.getOverview(),
                             parseDate(tmdb.getFirstAirDate()),
-                            request.getRaiting(),
+                            request.getRating(),
                             request.getReview()
                     ));
         }
@@ -87,7 +87,7 @@ public class ArchiveService {
         Archive archive = archiveRepository.findById(archiveId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ARCHIVE_NOT_FOUND));
         validateOwnership(user, archive);
-        archive.update(request.getRaiting(), request.getReview());
+        archive.update(request.getRating(), request.getReview());
         return ArchiveResponse.from(archive);
     }
 

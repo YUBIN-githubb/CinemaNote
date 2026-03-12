@@ -33,27 +33,27 @@ public class Archive extends BaseEntity {
 
     private LocalDate releaseDate;
 
-    private float raiting;
+    private float rating;
 
     @Column(length = 500)
     private String review;
 
-    private Archive(User user, String title, String posterPath, String overview, LocalDate releaseDate, float raiting, String review) {
+    private Archive(User user, String title, String posterPath, String overview, LocalDate releaseDate, float rating, String review) {
         this.user = user;
         this.title = title;
         this.posterPath = posterPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
-        this.raiting = raiting;
+        this.rating = rating;
         this.review = review;
     }
 
-    public static Archive of(User user, String title, String posterPath, String overview, LocalDate releaseDate, float raiting, String review) {
-        return new Archive(user, title, posterPath, overview, releaseDate, raiting, review);
+    public static Archive of(User user, String title, String posterPath, String overview, LocalDate releaseDate, float rating, String review) {
+        return new Archive(user, title, posterPath, overview, releaseDate, rating, review);
     }
 
-    public void update(float raiting, String review) {
-        this.raiting = raiting;
+    public void update(float rating, String review) {
+        this.rating = rating;
         this.review = review;
     }
 }

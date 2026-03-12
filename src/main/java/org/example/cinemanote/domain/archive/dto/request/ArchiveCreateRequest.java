@@ -15,7 +15,7 @@ public class ArchiveCreateRequest {
     @NotNull
     private ContentType contentType;
 
-    private float raiting;
+    private float rating;
 
     @Size(max = 500)
     private String review;

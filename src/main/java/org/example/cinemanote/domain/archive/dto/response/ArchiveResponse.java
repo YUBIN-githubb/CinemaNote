@@ -15,7 +15,7 @@ public class ArchiveResponse {
     private final String posterPath;
     private final String overview;
     private final LocalDate releaseDate;
-    private final float raiting;
+    private final float rating;
     private final String review;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
@@ -27,7 +27,7 @@ public class ArchiveResponse {
         this.posterPath = archive.getPosterPath();
         this.overview = archive.getOverview();
         this.releaseDate = archive.getReleaseDate();
-        this.raiting = archive.getRaiting();
+        this.rating = archive.getRating();
         this.review = archive.getReview();
         this.createdAt = archive.getCreatedAt();
         this.updatedAt = archive.getUpdatedAt();

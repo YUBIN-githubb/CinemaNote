@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class ArchiveUpdateRequest {
 
-    private float raiting;
+    private float rating;
 
     @Size(max = 500)
     private String review;
