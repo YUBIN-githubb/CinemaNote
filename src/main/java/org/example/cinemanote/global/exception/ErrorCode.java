@@ -29,8 +29,11 @@ public enum ErrorCode {
     ARCHIVE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "해당 아카이브에 접근 권한이 없습니다"),
     ARCHIVE_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 저장된 아카이브입니다"),
 
-    // 단축 URL
-    SHORT_LINK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 단축 링크입니다"),
+    // 공유 링크
+    SHARE_LINK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 공유 링크입니다"),
+    SHARE_LINK_EXPIRED(HttpStatus.GONE, "만료된 공유 링크입니다"),
+    SHARE_LINK_INACTIVE(HttpStatus.GONE, "취소된 공유 링크입니다"),
+    ARCHIVE_NOT_OWNER(HttpStatus.FORBIDDEN, "본인의 아카이브가 아닙니다"),
 
     // 공통
     INVALID_INPUT(HttpStatus.BAD_REQUEST, "잘못된 입력값입니다"),
