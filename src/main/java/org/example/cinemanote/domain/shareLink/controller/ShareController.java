@@ -3,11 +3,10 @@ package org.example.cinemanote.domain.shareLink.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.cinemanote.auth.annotation.AuthUser;
 import org.example.cinemanote.domain.shareLink.dto.response.ShareLinkResponse;
-import org.example.cinemanote.domain.shareLink.dto.response.SharedArchiveResponse;
+import org.example.cinemanote.domain.shareLink.dto.response.SharedArchivesPageResponse;
 import org.example.cinemanote.domain.shareLink.service.ShareService;
 import org.example.cinemanote.domain.user.entity.User;
 import org.example.cinemanote.global.response.ApiResponse;
-import org.example.cinemanote.global.response.PageResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class ShareController {
     }
 
     @GetMapping("/api/share/{shareToken}")
-    public ApiResponse<PageResponse<SharedArchiveResponse>> getSharedArchives(
+    public ApiResponse<SharedArchivesPageResponse> getSharedArchives(
             @PathVariable String shareToken,
             @PageableDefault(size = 10, sort = "createdAt") Pageable pageable
     ) {

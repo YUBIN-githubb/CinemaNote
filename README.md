@@ -17,6 +17,8 @@
 
 ## 기술 스택
 
+### Backend
+
 | 구분 | 기술 |
 |------|------|
 | Language | Java 21 |
@@ -25,11 +27,24 @@
 | ORM | Spring Data JPA (Hibernate) |
 | External API | TMDB API v3 |
 | Build Tool | Gradle |
-| Etc |  |
+
+### Frontend
+
+| 구분 | 기술 |
+|------|------|
+| Language | JavaScript (ES Module) |
+| Framework | Vue 3 (Composition API) |
+| Build Tool | Vite 5 |
+| 상태 관리 | Pinia |
+| 라우팅 | Vue Router 4 |
+| UI 라이브러리 | Element Plus |
+| HTTP 클라이언트 | Axios |
 
 ---
 
 ## 프로젝트 구조
+
+### Backend
 
 ```
 src/main/java/org/example/cinemanote
@@ -48,7 +63,7 @@ src/main/java/org/example/cinemanote
 │   │   └── service/         # ArchiveService
 │   ├── shareLink/
 │   │   ├── controller/      # ShareController
-│   │   ├── dto/response/    # ShareLinkResponse, SharedArchiveResponse
+│   │   ├── dto/response/    # ShareLinkResponse, SharedArchiveResponse, SharedArchivesPageResponse
 │   │   ├── entity/          # ShareLink
 │   │   ├── repository/      # ShareLinkRepository
 │   │   └── service/         # ShareService
@@ -66,6 +81,45 @@ src/main/java/org/example/cinemanote
     ├── exception/           # CustomException, ErrorCode, GlobalExceptionHandler
     └── response/            # ApiResponse<T>, PageResponse<T>
 ```
+
+### Frontend
+
+```
+frontend/src
+├── api/
+│   ├── axios.js             # Axios 인스턴스 (withCredentials, baseURL 설정)
+│   ├── auth.js              # 회원가입·로그인·로그아웃 API
+│   ├── archive.js           # 아카이브 CRUD API
+│   ├── share.js             # 공유 링크 생성·비활성화·조회 API
+│   └── tmdb.js              # TMDB 영화·드라마 검색 API
+├── components/
+│   ├── AppHeader.vue        # 상단 네비게이션 바 (로그인 상태 반영)
+│   ├── ArchiveCard.vue      # 아카이브 카드 컴포넌트 (readonly 모드 지원)
+│   ├── ShareLinkBox.vue     # 공유 링크 표시·복사 컴포넌트
+│   └── StopShareModal.vue   # 공유 중지 확인 모달
+├── stores/
+│   └── auth.js              # Pinia 인증 스토어 (로그인 상태 전역 관리)
+├── router/
+│   └── index.js             # Vue Router 설정 (인증 가드 포함)
+└── views/
+    ├── LoginView.vue         # 로그인 페이지
+    ├── SignupView.vue        # 회원가입 페이지
+    ├── ArchiveView.vue       # 내 아카이브 목록 (공유 링크 관리 포함)
+    ├── ArchiveCreateView.vue # 아카이브 생성 (TMDB 영화·드라마 검색 포함)
+    ├── ArchiveDetailView.vue # 아카이브 상세 조회
+    ├── ArchiveEditView.vue   # 아카이브 별점·리뷰 수정
+    └── SharedView.vue        # 공유된 아카이브 열람 ({닉네임}의 아카이브 표시)
+```
+
+| 경로 | 뷰 | 인증 필요 |
+|------|-----|:---------:|
+| `/login` | LoginView | X |
+| `/signup` | SignupView | X |
+| `/` | ArchiveView | O |
+| `/archive/new` | ArchiveCreateView | O |
+| `/archive/:id` | ArchiveDetailView | O |
+| `/archive/:id/edit` | ArchiveEditView | O |
+| `/share/:token` | SharedView | X |
 
 ---
 
@@ -95,7 +149,7 @@ src/main/java/org/example/cinemanote
 |--------|----------|------|:----:|
 | POST | `/api/share` | 공유 링크 생성 (이미 활성 링크가 있으면 기존 링크 반환, 멱등성 보장) | O |
 | DELETE | `/api/share` | 공유 링크 비활성화 | O |
-| GET | `/api/share/{shareToken}` | 공유 링크로 해당 유저의 전체 아카이브 페이징 조회 | X |
+| GET | `/api/share/{shareToken}` | 공유 링크로 해당 유저의 전체 아카이브 페이징 조회 (응답에 nickname 포함) | X |
 
 ### TMDB 영화
 
@@ -212,6 +266,7 @@ MVP 단계에서는 서버가 단일 인스턴스로 운영되므로 JDBC 세션
 ### 사전 요구사항
 
 - Java 21 이상
+- Node.js 18 이상
 - MySQL 8.0 이상 (데이터베이스 및 사용자 생성 필요)
 - TMDB API Key ([https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api) 에서 발급)
 
@@ -240,7 +295,7 @@ tmdb:
   base-url: https://api.themoviedb.org/3
 ```
 
-### 실행
+### 백엔드 실행
 
 ```bash
 git clone https://github.com/{username}/cinemanote.git
@@ -249,6 +304,16 @@ cd cinemanote
 ```
 
 > Spring Boot 실행 시 `ddl-auto: update` 설정으로 테이블이 자동 생성됩니다.
+
+### 프론트엔드 실행
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+> 개발 서버는 기본적으로 `http://localhost:5173`에서 실행되며, API 요청은 `http://localhost:8080`으로 프록시됩니다.
 
 ---
 
