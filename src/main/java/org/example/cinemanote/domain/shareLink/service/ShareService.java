@@ -2,14 +2,15 @@ package org.example.cinemanote.domain.shareLink.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cinemanote.domain.archive.repository.ArchiveRepository;
+import org.example.cinemanote.domain.archive.entity.Archive;
 import org.example.cinemanote.domain.shareLink.dto.response.ShareLinkResponse;
-import org.example.cinemanote.domain.shareLink.dto.response.SharedArchiveResponse;
+import org.example.cinemanote.domain.shareLink.dto.response.SharedArchivesPageResponse;
 import org.example.cinemanote.domain.shareLink.entity.ShareLink;
 import org.example.cinemanote.domain.shareLink.repository.ShareLinkRepository;
 import org.example.cinemanote.domain.user.entity.User;
 import org.example.cinemanote.global.exception.CustomException;
 import org.example.cinemanote.global.exception.ErrorCode;
-import org.example.cinemanote.global.response.PageResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class ShareService {
                 });
     }
 
-    public PageResponse<SharedArchiveResponse> getSharedArchives(String shareToken, Pageable pageable) {
+    public SharedArchivesPageResponse getSharedArchives(String shareToken, Pageable pageable) {
         ShareLink link = shareLinkRepository.findByShareToken(shareToken)
                 .orElseThrow(() -> new CustomException(ErrorCode.SHARE_LINK_NOT_FOUND));
         if (!link.isActive()) {
@@ -45,10 +46,8 @@ public class ShareService {
         if (link.getExpiresAt() != null && link.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new CustomException(ErrorCode.SHARE_LINK_EXPIRED);
         }
-        return PageResponse.from(
-                archiveRepository.findAllByUser(link.getUser(), pageable)
-                        .map(SharedArchiveResponse::from)
-        );
+        Page<Archive> archivePage = archiveRepository.findAllByUser(link.getUser(), pageable);
+        return SharedArchivesPageResponse.of(link.getUser().getNickname(), archivePage);
     }
 
     @Transactional
