@@ -93,7 +93,10 @@ async function doSearch() {
       contentType.value === 'MOVIE'
         ? await searchMovies(query.value)
         : await searchTv(query.value)
-    searchResults.value = data.results || []
+    searchResults.value = (data.results || []).map((item) => ({
+      ...item,
+      posterPath: item.posterPath || item.poster_path || null,
+    }))
   } catch (err) {
     ElMessage.error(err.message)
   }
