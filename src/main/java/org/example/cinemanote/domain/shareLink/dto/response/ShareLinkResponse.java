@@ -1,5 +1,6 @@
 package org.example.cinemanote.domain.shareLink.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.example.cinemanote.domain.shareLink.entity.ShareLink;
 
@@ -11,6 +12,7 @@ public class ShareLinkResponse {
     private final String shareToken;
     private final String shareUrl;
     private final LocalDateTime expiresAt;
+    @JsonProperty("isActive")
     private final boolean isActive;
 
     private ShareLinkResponse(ShareLink shareLink) {
